@@ -1,0 +1,16 @@
+# Train/val/test sets as 1) dir: path/to/imgs, 2) file: path/to/imgs.txt, or 3) list: [path/to/imgs1, path/to/imgs2, ..]
+path: /home/miladtufan/Desktop/University/Master_thesis/domain-adapation/data/Kitti/initial # dataset root dir
+train: train.txt # train images (relative to 'path') 118287 images
+val: #val2017.txt # val images (relative to 'path') 5000 images
+test: test.txt # 20288 of 40670 images, submit to https://competitions.codalab.org/competitions/20794
+
+# Classes
+names:
+  0: Car
+  1: Van
+  2: Truck
+  3: Pedestrian
+  4: Person_sitting
+  5: Cyclist
+  6: Tram
+  7: Misc

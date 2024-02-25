@@ -506,7 +506,7 @@ class LoadImagesAndLabels(Dataset):
                 elif p.is_file():  # file
                     with open(p) as t:
                         t = t.read().strip().splitlines()
-                        parent = str(p.parent) + os.sep
+                        parent = str(p.parent) + os.sep + "images" + os.sep
                         f += [x.replace("./", parent, 1) if x.startswith("./") else x for x in t]  # to global path
                         # f += [p.parent / x.lstrip(os.sep) for x in t]  # to global path (pathlib)
                 else:

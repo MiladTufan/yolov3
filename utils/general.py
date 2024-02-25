@@ -25,7 +25,7 @@ from subprocess import check_output
 from tarfile import is_tarfile
 from typing import Optional
 from zipfile import ZipFile, is_zipfile
-
+from tqdm import tqdm
 import cv2
 import numpy as np
 import pandas as pd
@@ -1210,3 +1210,29 @@ if Path(inspect.stack()[0].filename).parent.parent.as_posix() in inspect.stack()
     cv2.imread, cv2.imwrite, cv2.imshow = imread, imwrite, imshow  # redefine
 
 # Variables ------------------------------------------------------------------------------------------------------------
+def create_train_test_split_txt(src_path, dest_path, seed=1, train_percantage=0.8, shuffle=True, val=False):
+    try:
+        all_files = sorted(os.listdir(src_path), key=lambda x: int(x.split(".")[0]))
+    except:
+        print(f"No Images found to split for: {src_path}")
+        return
+    print(f"creating train test split for: {src_path} in {dest_path}")
+    
+    if shuffle:
+        random.seed(seed)
+        random.shuffle(all_files)
+    
+    if not val:
+        test_file = open(os.path.join(dest_path, "test.txt"), "w")
+    else:
+        test_file = open(os.path.join(dest_path, "val.txt"), "w")
+    
+    train_file = open(os.path.join(dest_path, "train.txt"), "w")
+    for idx, file in tqdm(enumerate(all_files), total=len(all_files), desc="creating train test split"):
+        
+        if idx / len(all_files) >= train_percantage:
+            test_file.write("./"+file+"\n")
+        else:
+            train_file.write("./"+file+"\n")
+    test_file.close()
+    train_file.close()
